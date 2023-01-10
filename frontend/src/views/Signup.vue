@@ -58,11 +58,8 @@ export default {
     };
   },
   methods: {
-    async signup() {
-      console.log("To implement") // TODO remove
-
-      /*
-      const postRequest = await fetch(this.hostname + "/api/auth", {
+    async signup() {      
+      const postRequest = await fetch(this.hostname + "/api/auth/signup", {
         method: "POST",
         headers: { "Content-type": "application/json" },
         body: JSON.stringify({
@@ -78,7 +75,7 @@ export default {
       }else{
         // user not inserted
       }
-      */
+      
     },
   },
 };

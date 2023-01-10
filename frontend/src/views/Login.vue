@@ -44,9 +44,6 @@ export default {
   },
   methods: {
     async login() {
-      console.log("to implement") // TODO remove
-
-      /*
       const token = await fetch(this.hostname + "/api/auth/signin", {
         method: "POST",
         headers: { "Content-type": "application/json" },
@@ -62,7 +59,6 @@ export default {
         // wrong credential (defined by the protocol, the objToken has the attribute token if the user posted the right credentials)
         console.log("user credentials are wrong");
       }
-      */
     },
     setJwtCookie(token) {
       // Set the expiration date to one hour from now

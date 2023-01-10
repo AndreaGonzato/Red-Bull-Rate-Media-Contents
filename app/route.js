@@ -38,15 +38,13 @@ function authenticateToken(req, res, next) {
 
 const router = express.Router();
 
-
 // TODO how can i restrict and make more secure my access policy?
 //this permit to get a fetch from all the domain and port
 router.use((req, res, next) => {
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Headers', '*');
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Headers", "*");
   next();
-})
-
+});
 
 // TODO GENERAL check that it dos not inject code in the api (attention to all the POST requests)
 
@@ -62,13 +60,57 @@ router.get("/protected", authenticateToken, async (req, res) => {
 
 // TODO remove this get, it is just a test to see if the server is still alive
 router.get("/test", (req, res) => {
+
   console.log("Server is still alive");
   res.json({ message: "server is still alive working" });
 });
 
+// API 1
+// register a new user
+// input e.g. {"username": "uniqueUsername", "email":"someemail@gmail.com", "password":"pass"}
+router.post("/auth/signup", async (req, res) => {
+  const mongo = db.getDb();
+  const user = req.body;
 
-router.get("/media", (req, res) => {
-    res.send({message: "ok media"});
+  const nextUserID = await dbManager.getNextId(dbCollections.USERS);
+  user.id = nextUserID;
+
+  if (user.username === undefined || user.email === undefined || user.password === undefined) {
+    return res.status(500).send({message : "you need to specify all the fields of a user: (username, email, password)"});
+  }
+
+  // check that the username is unique
+  const userWithSameUsername = await mongo.collection(dbCollections.USERS).findOne({username: user.username});
+  if(userWithSameUsername){
+    // it already exist an user with that username 
+    return res.status(500).send({message: "an user with username: "+userWithSameUsername.username +" already exist"});
+  }
+
+  const result = await mongo.collection(dbCollections.USERS).insertOne(user);
+  res.json(result);
+
+});
+
+// API 2 : OK
+// login of a user
+// when a user sign in I give him a JWT token
+// e.g of an input: {"email" : "myEmail@gmail.com", "password" : "myPassword"}
+router.post("/auth/signin", async (req, res) => {
+  res.setHeader('Access-Control-Allow-Credentials', 'true')
+
+  const mongo = db.getDb();
+
+  const postedUser = ({ email, password } = req.body);
+
+  const user = await mongo.collection(dbCollections.USERS).findOne(postedUser);
+
+  if (!user) {
+    // User not found: (email + password) does not match
+    res.status(400).send({ message: "User not found" });
+  } else {
+    const token = generateToken({ id: user.id });
+    res.send({token});
+  }
 });
 
 module.exports = router;
