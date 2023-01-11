@@ -20,9 +20,10 @@
 
     <div class="div-close-like">
       <span class="like">
-        <button class="btn btn-block btn-success">
+        <button class="btn btn-success">
           <i class="fa-regular fa-thumbs-up"></i> Like
         </button>
+        {{ likesNumber }}
       </span>
 
       <span v-if="this.showVideo" class="close">
@@ -32,7 +33,7 @@
       </span>
 
       <span class="dislike">
-        <button class="btn btn-block btn-danger">
+        <button class="btn btn-danger">
           <i class="fa-regular fa-thumbs-down"></i> Dislike
         </button>
       </span>
@@ -44,10 +45,11 @@
 export default {
   name: "MediaContent",
   props: {
-    theId : String,
+    theId: String,
     theTitle: String,
     previewImgUrl: String,
     contentUrl: String,
+    likesNumber: Number,
   },
   data() {
     return {
@@ -75,24 +77,22 @@ video {
 .div-close-like {
   display: grid;
   grid-gap: 10px;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1 fr1fr;
   max-width: 400px;
   margin: auto;
   margin-top: 0.5em;
-  grid-template-areas: "like close dislike";
+  grid-template-areas: "like  close dislike ";
 }
 
-.div-close-like .like{
+.div-close-like .like {
   grid-area: like;
 }
 
-.div-close-like .close{
+.div-close-like .close {
   grid-area: close;
 }
 
-.div-close-like .dislike{
+.div-close-like .dislike {
   grid-area: dislike;
 }
-
-
 </style>

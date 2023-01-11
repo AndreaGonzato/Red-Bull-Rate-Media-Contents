@@ -10,6 +10,7 @@
           v-bind:the-title="content.title"
           v-bind:preview-img-url="content.previewUrl"
           v-bind:content-url="content.contentUrl"
+          v-bind:likes-number="content.likes ? content.likes.length : 0"
         ></MediaContent>
       </div>
     </div>
@@ -75,7 +76,6 @@ export default {
       });
       const contentsObj = await resultJSON.json();
       this.contents = contentsObj;
-      console.log(contentsObj); // TODO remove
     },
     moreContents() {
       this.limitContents += 20;
