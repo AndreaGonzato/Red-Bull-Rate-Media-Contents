@@ -83,7 +83,6 @@ export default {
       this.limitContents += 20;
     },
     handleLike(message) {
-      console.log("message: ", message);
       const element = this.contents.find(el => el.id === message.contentId);
       const userID = this.userId;
 
@@ -92,8 +91,6 @@ export default {
       }else{
         element.likes.append(userID);
       }
-
-      console.log(element); // TODO remove this test
     },
   },
 };

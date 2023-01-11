@@ -33,7 +33,8 @@
 
       <span class="dislike">
         <button class="btn btn-danger">
-          <i class="fa-regular fa-thumbs-down"></i> Dislike {{ this.dislikesNumber }}
+          <i class="fa-regular fa-thumbs-down"></i> Dislike
+          {{ this.dislikesNumber }}
         </button>
       </span>
     </div>
@@ -66,8 +67,7 @@ export default {
       this.showVideo = !this.showVideo;
     },
     async postLike() {
-      this.$emit("like", { contentId: this.theId }); 
-
+      // update backend
       var jwt = cookieManager.getCookie("jwt");
       // Set the Authorization header of the request
       var headers = new Headers();
@@ -84,6 +84,12 @@ export default {
       );
 
       const obj = await postRequest.json();
+      if (!obj.error) {
+        // update frontend
+        this.$emit("like", { contentId: this.theId });
+      } else {
+        // you already like this content, no need to update frontend
+      }
     },
   },
 };

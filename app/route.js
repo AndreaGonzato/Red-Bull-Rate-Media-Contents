@@ -160,7 +160,7 @@ router.post("/social/like/:id", authenticateToken, async (req, res) => {
 
   if(content.likes.includes(userID)){
     // the user with userID has already put a like to this content previously
-    return res.send({message: "you already put a like to this content previously"});
+    return res.send({message: "you already put a like to this content previously", error: true});
   }
 
   const result = await mongo.collection(dbCollections.CONTENTS).updateOne({id: contentID}, {$push: {likes: userID}}); 
