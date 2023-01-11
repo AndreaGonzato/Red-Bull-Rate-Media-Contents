@@ -144,8 +144,16 @@ router.get("/contents", async (req, res) => {
 
 
 //API 5
-router.post("/contents", authenticateToken, async (req, res) => {
+router.post("/social/like/:id", authenticateToken, async (req, res) => {  
+  const contentID = req.params.id;
 
+  const mongo = db.getDb();
+
+  const content = await mongo.collection(dbCollections.CONTENTS).findOne({id: contentID}); 
+
+  // TODO check that the user not already put a like to this content previously
+
+  res.send({content});
 });
 
 

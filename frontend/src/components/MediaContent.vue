@@ -20,7 +20,7 @@
 
     <div class="div-close-like">
       <span class="like">
-        <button class="btn btn-block btn-primary">
+        <button class="btn btn-block btn-success">
           <i class="fa-regular fa-thumbs-up"></i> Like
         </button>
       </span>
@@ -32,7 +32,7 @@
       </span>
 
       <span class="dislike">
-        <button class="btn btn-block btn-primary">
+        <button class="btn btn-block btn-danger">
           <i class="fa-regular fa-thumbs-down"></i> Dislike
         </button>
       </span>
@@ -78,6 +78,7 @@ video {
   grid-template-columns: 1fr 1fr 1fr;
   max-width: 400px;
   margin: auto;
+  margin-top: 0.5em;
   grid-template-areas: "like close dislike";
 }
 
@@ -92,4 +93,6 @@ video {
 .div-close-like .dislike{
   grid-area: dislike;
 }
+
+
 </style>
