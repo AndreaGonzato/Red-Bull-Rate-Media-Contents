@@ -1,6 +1,7 @@
 <template>
     <div class="content">
-        <p>title: {{ theTitle }}</p>
+        <p><b>{{ theTitle }}</b></p>
+        <img v-bind:src="previewImgUrl"/>
     </div>
 </template>
 
@@ -9,8 +10,16 @@
 export default{
     name: "MediaCOntent",
     props : {
-        theTitle : String
+        theTitle : String,
+        previewImgUrl: String
     },
 
 }
 </script>
+
+<style scoped>
+
+img{
+    max-height: 250px;
+}
+</style>

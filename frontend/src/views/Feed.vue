@@ -7,8 +7,9 @@
 
 
     <div v-for="content in contents">
-        <MediaContent v-bind:the-title="content.title"></MediaContent>
-
+        <div class="content">
+          <MediaContent v-bind:the-title="content.title" v-bind:preview-img-url="content.previewUrl" ></MediaContent>
+        </div>
     </div>
 
   </div>
@@ -71,5 +72,9 @@ export default {
 <style scoped>
 .feed {
   text-align: center;
+}
+
+.content{
+  margin-bottom: 3%;
 }
 </style>
