@@ -144,16 +144,23 @@ router.get("/contents", async (req, res) => {
 
 
 //API 5
-router.post("/social/like/:id", authenticateToken, async (req, res) => {  
+// add a like to the content with the given id
+router.post("/social/like/:id", authenticateToken, async (req, res) => {
+  const userID = req.user.id;
   const contentID = req.params.id;
 
   const mongo = db.getDb();
 
   const content = await mongo.collection(dbCollections.CONTENTS).findOne({id: contentID}); 
 
-  // TODO check that the user not already put a like to this content previously
+  if(content.likes.includes(userID)){
+    // the user with userID has already put a like to this content previously
+    return res.send({message: "you already put a like to this content previously"});
+  }
 
-  res.send({content});
+  const result = await mongo.collection(dbCollections.CONTENTS).updateOne({id: contentID}, {$push: {likes: userID}}); 
+
+  res.send({result});
 });
 
 
