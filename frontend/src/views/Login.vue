@@ -57,7 +57,7 @@ export default {
         this.setJwtCookie(objToken.token);
 
         // go the the Feed page
-        this.$router.push({ name: 'Feed' , query: { email: this.email }} );
+        this.$router.push({ name: 'Feed'} );
       } else {
         // wrong credential (defined by the protocol, the objToken has the attribute token if the user posted the right credentials)
         console.log("user credentials are wrong");

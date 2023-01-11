@@ -2,8 +2,7 @@
   <div class="feed">
     <h1>Feed</h1>
     <p>This is the feed</p>
-    <p>{{ this.email }}</p>
-
+    
     <button @click.prevent="whoami" class="btn btn-primary">Who am i</button>
   </div>
 </template>
