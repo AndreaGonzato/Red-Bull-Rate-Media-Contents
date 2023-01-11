@@ -128,4 +128,18 @@ router.get("/social/whoami", authenticateToken, async (req, res) => {
 });
 
 
+// API 4
+// get the contents in the DB
+router.get("/contents", async (req, res) => {
+  const mongo = db.getDb();
+
+  const contents = await mongo
+    .collection(dbCollections.CONTENTS)
+    .find()
+    .toArray();
+
+  res.json(contents);
+});
+
+
 module.exports = router;
