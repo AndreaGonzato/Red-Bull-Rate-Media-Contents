@@ -163,5 +163,28 @@ router.post("/social/like/:id", authenticateToken, async (req, res) => {
   res.send({result});
 });
 
+//API 6
+// remove a like to the content with the given id
+router.delete("/social/like/:id", authenticateToken, async (req, res) => {
+  const userID = req.user.id;
+  const contentID = req.params.id;
+
+  const mongo = db.getDb();
+
+  const content = await mongo.collection(dbCollections.CONTENTS).findOne({id: contentID}); 
+
+  if(content.likes.includes(userID)){
+    // the user with this userID has a like to this content (put previously)
+    const result = await mongo.collection(dbCollections.CONTENTS).updateOne({id: contentID}, {$pull: {likes: userID}}); 
+    res.send({result});
+
+  }else{
+    return res.send({message: `user with id ${userID} do no has a like to this content to remove`});
+  }
+
+
+});
+
+
 
 module.exports = router;
