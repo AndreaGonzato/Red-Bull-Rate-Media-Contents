@@ -11,17 +11,22 @@
         <router-link to="/">Home</router-link>
       </span>
 
-      <span>
-        <router-link to="/signup" v-if="!showAccount">Signup</router-link>
+      <span v-if="!showAccount">
+        <router-link to="/signup">Signup</router-link>
       </span>
 
-      <span>
-        <router-link to="/login" v-if="!showAccount" >Login</router-link>
+      <span v-if="!showAccount">
+        <router-link to="/login" >Login</router-link>
       </span>
 
 
-      <span>
-        <router-link to="/account" v-if="showAccount">Account</router-link>
+      <span v-if="showAccount">
+        <router-link to="/feed">Feed</router-link>
+      </span>
+
+
+      <span v-if="showAccount">
+        <router-link to="/account">Account</router-link>
       </span>
 
 
