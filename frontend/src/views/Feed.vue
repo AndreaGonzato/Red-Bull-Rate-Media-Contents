@@ -8,7 +8,7 @@
 
     <div v-for="content in contents">
         <div class="content">
-          <MediaContent v-bind:the-title="content.title" v-bind:preview-img-url="content.previewUrl" ></MediaContent>
+          <MediaContent v-bind:the-title="content.title" v-bind:preview-img-url="content.previewUrl" v-bind:content-url="content.contentUrl"></MediaContent>
         </div>
     </div>
 

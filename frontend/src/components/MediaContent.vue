@@ -5,6 +5,8 @@
         <button @click.prevent="viewVideo">
             <img v-bind:src="previewImgUrl" @click.prevent="viewVideo"/>
         </button>
+
+        <p>{{ contentUrl }}</p>
         
     </div>
 </template>
@@ -15,7 +17,8 @@ export default{
     name: "MediaContent",
     props : {
         theTitle : String,
-        previewImgUrl: String
+        previewImgUrl: String,
+        contentUrl: String
     },
     methods:{
         viewVideo(){
