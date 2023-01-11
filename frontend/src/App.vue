@@ -1,8 +1,8 @@
 <template>
-  <TheNavigation></TheNavigation>
+  <TheNavigation v-bind:show-account="this.showAccount"></TheNavigation>
 
   <div class="container">
-    <routerView></routerView>
+    <routerView @message="handleMessage"></routerView>
   </div>
 </template>
 
@@ -10,12 +10,19 @@
 import TheNavigation from "./components/TheNavigation.vue";
 
 export default {
-  components: { TheNavigation },
+  components: {
+    TheNavigation 
+  },
   data() {
     return {
-      URL_SITE: "http://localhost",
+      showAccount : false
     };
   },
+  methods: {
+    handleMessage(message){
+      this.showAccount = message.showAccount
+    }
+  }
 };
 </script>
 

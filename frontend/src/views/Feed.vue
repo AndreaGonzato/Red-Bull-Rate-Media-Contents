@@ -22,6 +22,7 @@ export default {
   },
   mounted() {
     this.whoami();
+    this.$emit('message', {showAccount: true});
   },
   methods: {
     async whoami() {

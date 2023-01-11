@@ -12,12 +12,19 @@
       </span>
 
       <span>
-        <router-link to="/signup">Signup</router-link>
+        <router-link to="/signup" v-if="!showAccount">Signup</router-link>
       </span>
 
       <span>
-        <router-link to="/login">Login</router-link>
+        <router-link to="/login" v-if="!showAccount" >Login</router-link>
       </span>
+
+
+      <span>
+        <router-link to="/account" v-if="showAccount">Account</router-link>
+      </span>
+
+
     </div>
   </div>
 </template>
@@ -25,6 +32,9 @@
 <script>
 export default {
   name: "TheNavigation",
+  props : {
+    showAccount : Boolean
+  },
 };
 </script>
 
