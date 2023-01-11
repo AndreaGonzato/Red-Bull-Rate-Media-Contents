@@ -18,16 +18,25 @@
       </video>
     </div>
 
-    <!--Close button video-->
-    <div v-if="this.showVideo">
-      <button
-        @click.prevent="toggleShowVideo"
-        class="btn btn-secondary"
-      >
-        Close
-      </button>
-    </div>
+    <div class="div-close-like">
+      <span class="like">
+        <button class="btn btn-block btn-primary">
+          <i class="fa-regular fa-thumbs-up"></i> Like
+        </button>
+      </span>
 
+      <span v-if="this.showVideo" class="close">
+        <button @click.prevent="toggleShowVideo" class="btn btn-secondary">
+          Close
+        </button>
+      </span>
+
+      <span class="dislike">
+        <button class="btn btn-block btn-primary">
+          <i class="fa-regular fa-thumbs-down"></i> Dislike
+        </button>
+      </span>
+    </div>
   </div>
 </template>
 
@@ -58,9 +67,28 @@ img {
   max-height: 250px;
 }
 
-video{
-    max-height: 400px;
+video {
+  max-height: 400px;
 }
 
+.div-close-like {
+  display: grid;
+  grid-gap: 10px;
+  grid-template-columns: 1fr 1fr 1fr;
+  max-width: 400px;
+  margin: auto;
+  grid-template-areas: "like close dislike";
+}
 
+.div-close-like .like{
+  grid-area: like;
+}
+
+.div-close-like .close{
+  grid-area: close;
+}
+
+.div-close-like .dislike{
+  grid-area: dislike;
+}
 </style>
