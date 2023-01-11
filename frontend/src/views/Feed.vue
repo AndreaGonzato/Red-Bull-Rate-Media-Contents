@@ -1,8 +1,9 @@
 <template>
   <div class="feed">
     <h1>Feed</h1>
-    <p>This is the feed</p>
+    <p>This is the feed of {{ this.username }}</p>
     
+
     <button @click.prevent="whoami" class="btn btn-primary">Who am i</button>
   </div>
 </template>
@@ -15,8 +16,12 @@ export default {
   data() {
     return {
         hostname: config.hostname,
-        email: this.$route.query.email,
+        username : ''
     };
+  },
+  mounted() {
+    console.log("created");
+    this.whoami();
   },
   methods: {
     async whoami() {
@@ -31,8 +36,11 @@ export default {
         headers: headers,
       });
 
-      const objToken = await resultJSON.json();
-      console.log(objToken);
+      const objUser = await resultJSON.json();
+      console.log(objUser); // TODO remove
+
+      this.username = objUser.username;
+
     },
     getCookie(name) {
       // Split the cookies string and get all individual name=value pairs in an array
