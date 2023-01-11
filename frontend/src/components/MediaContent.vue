@@ -2,8 +2,8 @@
     <div class="content">
         <p><b>{{ theTitle }}</b></p>
 
-        <button @click.prevent="viewVideo">
-            <img v-bind:src="previewImgUrl" @click.prevent="viewVideo"/>
+        <button @click.prevent="toggleViewVideo">
+            <img v-bind:src="previewImgUrl"/>
         </button>
 
         <p>{{ contentUrl }}</p>
@@ -20,9 +20,15 @@ export default{
         previewImgUrl: String,
         contentUrl: String
     },
+    data(){
+        return {
+            viewVideo : false
+        }
+    },
     methods:{
-        viewVideo(){
-            console.log("To implement");
+        toggleViewVideo(){
+            this.viewVideo = !this.viewVideo;
+            console.log(this.viewVideo);
         }
     }
 
