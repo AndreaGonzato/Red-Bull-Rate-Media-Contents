@@ -20,8 +20,8 @@
 
     <div class="div-close-like">
       <span class="like">
-        <button class="btn btn-success">
-          <i class="fa-regular fa-thumbs-up"></i> Like {{ likesNumber }}
+        <button class="btn btn-success" @click.prevent="postLike">
+          <i class="fa-regular fa-thumbs-up"></i> Like {{ this.likesNumber }}
         </button>
       </span>
 
@@ -33,7 +33,7 @@
 
       <span class="dislike">
         <button class="btn btn-danger">
-          <i class="fa-regular fa-thumbs-down"></i> Dislike {{ dislikesNumber }}
+          <i class="fa-regular fa-thumbs-down"></i> Dislike {{ this.dislikesNumber }}
         </button>
       </span>
     </div>
@@ -41,6 +41,9 @@
 </template>
 
 <script>
+import config from "@/config.js";
+import cookieManager from "@/cookieManager.js";
+
 export default {
   name: "MediaContent",
   props: {
@@ -54,12 +57,34 @@ export default {
   data() {
     return {
       showVideo: false,
+      likes: 0,
+      dislike: 0,
     };
   },
   methods: {
     toggleShowVideo() {
       this.showVideo = !this.showVideo;
       console.log(this.showVideo); // TODO remove
+    },
+    async postLike() {
+      this.likes += 1;
+
+      var jwt = cookieManager.getCookie("jwt");
+      // Set the Authorization header of the request
+      var headers = new Headers();
+      headers.append("Authorization", "Bearer " + jwt);
+      headers.append("Content-type", "application/json");
+      
+      const postRequest = await fetch(
+        config.hostname + "/api/social/like/" + this.theId,
+        {
+          method: "POST",
+          headers,
+          body: JSON.stringify({}),
+        }
+      );
+
+      const obj = await postRequest.json();
     },
   },
 };

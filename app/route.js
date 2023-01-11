@@ -153,6 +153,11 @@ router.post("/social/like/:id", authenticateToken, async (req, res) => {
 
   const content = await mongo.collection(dbCollections.CONTENTS).findOne({id: contentID}); 
 
+  if(content.likes === undefined){
+    content.likes = [];
+  }
+
+
   if(content.likes.includes(userID)){
     // the user with userID has already put a like to this content previously
     return res.send({message: "you already put a like to this content previously"});
@@ -171,7 +176,12 @@ router.delete("/social/like/:id", authenticateToken, async (req, res) => {
 
   const mongo = db.getDb();
 
+
   const content = await mongo.collection(dbCollections.CONTENTS).findOne({id: contentID}); 
+
+  if(content.likes === undefined){
+    return res.send({message: `user with id ${userID} do no has a like to this content to remove`});
+  }
 
   if(content.likes.includes(userID)){
     // the user with this userID has a like to this content (put previously)
