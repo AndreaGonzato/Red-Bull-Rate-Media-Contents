@@ -7,7 +7,8 @@
 
 
     <div v-for="content in contents">
-        {{ content.title }}
+        <MediaContent v-bind:the-title="content.title"></MediaContent>
+
     </div>
 
   </div>
@@ -16,6 +17,7 @@
 <script>
 import config from "@/config.js";
 import cookieManager from "@/cookieManager.js";
+import MediaContent from "@/components/MediaContent.vue";
 
 export default {
   name: "Feed",
@@ -25,6 +27,9 @@ export default {
         username : '',
         contents : {},
     };
+  },
+  components: {
+    MediaContent 
   },
   mounted() {
     this.whoami();

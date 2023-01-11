@@ -1,5 +1,16 @@
 <template>
     <div class="content">
-        <p>I'm a content</p>
+        <p>title: {{ theTitle }}</p>
     </div>
 </template>
+
+<script>
+
+export default{
+    name: "MediaCOntent",
+    props : {
+        theTitle : String
+    },
+
+}
+</script>
