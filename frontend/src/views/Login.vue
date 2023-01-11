@@ -56,6 +56,10 @@ export default {
       if (objToken.token !== undefined) {
         // save the jwt in cookie
         cookieManager.setJwtCookie(objToken.token);
+
+        // tell the app to show account in the nav menu and remove login and signin
+        this.$emit("message", { showAccount: true });
+        
         // go the the Feed page
         this.$router.push({ name: 'Feed'} );
       } else {

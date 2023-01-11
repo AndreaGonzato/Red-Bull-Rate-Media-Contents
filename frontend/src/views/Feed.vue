@@ -12,6 +12,7 @@
           v-bind:content-url="content.contentUrl"
           v-bind:likes-number="content.likes ? content.likes.length : 0"
           v-bind:dislikes-number="content.dislikes ? content.likes.length : 0"
+          @like="handleLike"
         ></MediaContent>
       </div>
     </div>
@@ -35,6 +36,7 @@ export default {
     return {
       hostname: config.hostname,
       username: "",
+      userId: "",
       contents: [{}],
       limitContents: 20,
     };
@@ -50,7 +52,6 @@ export default {
   },
   mounted() {
     this.whoami();
-    this.$emit("message", { showAccount: true });
     this.fetchContents();
   },
   methods: {
@@ -67,7 +68,7 @@ export default {
       });
 
       const objUser = await resultJSON.json();
-
+      this.userId = objUser.id; // TODO 
       this.username = objUser.username;
     },
     async fetchContents() {
@@ -80,6 +81,19 @@ export default {
     },
     moreContents() {
       this.limitContents += 20;
+    },
+    handleLike(message) {
+      console.log("message: ", message);
+      const element = this.contents.find(el => el.id === message.contentId);
+      const userID = this.userId;
+
+      if(element.likes === undefined){
+        element.likes = [userID]
+      }else{
+        element.likes.append(userID);
+      }
+
+      console.log(element); // TODO remove this test
     },
   },
 };

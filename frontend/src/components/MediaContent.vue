@@ -64,17 +64,16 @@ export default {
   methods: {
     toggleShowVideo() {
       this.showVideo = !this.showVideo;
-      console.log(this.showVideo); // TODO remove
     },
     async postLike() {
-      this.likes += 1;
+      this.$emit("like", { contentId: this.theId }); 
 
       var jwt = cookieManager.getCookie("jwt");
       // Set the Authorization header of the request
       var headers = new Headers();
       headers.append("Authorization", "Bearer " + jwt);
       headers.append("Content-type", "application/json");
-      
+
       const postRequest = await fetch(
         config.hostname + "/api/social/like/" + this.theId,
         {
