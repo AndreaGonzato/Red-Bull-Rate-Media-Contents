@@ -38,7 +38,6 @@ export default {
       });
 
       const objUser = await resultJSON.json();
-      console.log(objUser); // TODO remove
 
       this.username = objUser.username;
 
