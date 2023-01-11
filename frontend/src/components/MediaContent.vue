@@ -2,16 +2,15 @@
     <div class="content">
         <p><b>{{ theTitle }}</b></p>
 
-        <button @click.prevent="toggleViewVideo">
+        <button @click.prevent="toggleShowVideo">
             <img v-bind:src="previewImgUrl"/>
         </button>
 
 
-        <div v-if="this.viewVideo">
-            <button @click.prevent="toggleViewVideo"  class="btn btn-primary close-button">Close</button>
+        <div v-if="this.showVideo">
+            <button @click.prevent="toggleShowVideo"  class="btn btn-primary close-button">Close</button>
         </div>
         
-         
 
         <p>{{ contentUrl }}</p>
         
@@ -29,13 +28,13 @@ export default{
     },
     data(){
         return {
-            viewVideo : false
+            showVideo : false
         }
     },
     methods:{
-        toggleViewVideo(){
-            this.viewVideo = !this.viewVideo;
-            console.log(this.viewVideo);
+        toggleShowVideo(){
+            this.showVideo = !this.showVideo;
+            console.log(this.showVideo); // TODO remove
         }
     }
 
