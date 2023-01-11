@@ -6,6 +6,13 @@
             <img v-bind:src="previewImgUrl"/>
         </button>
 
+
+        <div v-if="this.viewVideo">
+            <button @click.prevent="toggleViewVideo"  class="btn btn-primary close-button">Close</button>
+        </div>
+        
+         
+
         <p>{{ contentUrl }}</p>
         
     </div>
