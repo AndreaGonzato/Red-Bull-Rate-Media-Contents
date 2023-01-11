@@ -2,9 +2,14 @@
   <div class="feed">
     <h1>Feed</h1>
     <p>This is the feed of {{ this.username }}</p>
-    
 
     <button @click.prevent="whoami" class="btn btn-primary">Who am i</button>
+
+
+    <div v-for="content in contents">
+        {{ content.title }}
+    </div>
+
   </div>
 </template>
 
@@ -17,12 +22,14 @@ export default {
   data() {
     return {
         hostname: config.hostname,
-        username : ''
+        username : '',
+        contents : {},
     };
   },
   mounted() {
     this.whoami();
     this.$emit('message', {showAccount: true});
+    this.fetchContents();
   },
   methods: {
     async whoami() {
@@ -42,6 +49,16 @@ export default {
       this.username = objUser.username;
 
     },
+    async fetchContents(){
+        const resultJSON = await fetch(this.hostname + "/api/contents", {
+            method: "GET",
+            headers: {"Content-type": "application/json"},
+        });
+        const contentsObj = await resultJSON.json();
+        this.contents = contentsObj;
+        console.log(contentsObj);
+
+    }   
   },
 };
 </script>
