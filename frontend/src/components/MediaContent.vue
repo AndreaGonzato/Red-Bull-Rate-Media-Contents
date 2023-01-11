@@ -11,12 +11,14 @@
       </button>
     </div>
 
+    <!--video-->
     <div v-if="this.showVideo">
       <video controls>
         <source v-bind:src="contentUrl" type="video/mp4" />
       </video>
     </div>
 
+    <!--Close button video-->
     <div v-if="this.showVideo">
       <button
         @click.prevent="toggleShowVideo"
@@ -54,5 +56,9 @@ export default {
 <style scoped>
 img {
   max-height: 250px;
+}
+
+video{
+    max-height: 400px;
 }
 </style>
