@@ -109,8 +109,23 @@ router.post("/auth/signin", async (req, res) => {
     res.status(400).send({ message: "User not found" });
   } else {
     const token = generateToken({ id: user.id });
-    res.send({token});
+    res.send({token, userId:user.id});
   }
 });
+
+// API 3
+// if the user is authenticated return the user info
+router.get("/social/whoami", authenticateToken, async (req, res) => {
+  const mongo = db.getDb();
+
+  const userId = req.user.id;
+
+  const user = await mongo
+    .collection(dbCollections.USERS)
+    .findOne({ id: userId });
+
+  res.json(user);
+});
+
 
 module.exports = router;
