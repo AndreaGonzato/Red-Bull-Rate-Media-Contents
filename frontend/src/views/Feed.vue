@@ -3,10 +3,19 @@
     <h1>Feed</h1>
     <p>Welcome back {{ this.username }}</p>
 
-    <div v-for="content in contents">
+    <div v-for="content in limitedContents">
         <div class="content">
           <MediaContent v-bind:the-title="content.title" v-bind:preview-img-url="content.previewUrl" v-bind:content-url="content.contentUrl"></MediaContent>
         </div>
+    </div>
+
+    <div>
+      <button
+        @click.prevent="moreContents"
+        class="btn btn-primary"
+      >
+        More...
+      </button>
     </div>
 
   </div>
@@ -23,11 +32,19 @@ export default {
     return {
         hostname: config.hostname,
         username : '',
-        contents : {},
+        contents : [{}],
+        limitContents: 20,
     };
   },
   components: {
     MediaContent 
+  },
+  computed: {
+    limitedContents() {
+
+      return this.contents.slice(0, this.limitContents);
+      //return this.contents[0, this.limit];
+    }
   },
   mounted() {
     this.whoami();
@@ -59,9 +76,12 @@ export default {
         });
         const contentsObj = await resultJSON.json();
         this.contents = contentsObj;
-        console.log(contentsObj);
+        console.log(contentsObj); // TODO remove
 
-    }   
+    },
+    moreContents(){
+      this.limitContents += 20; 
+    } 
   },
 };
 </script>

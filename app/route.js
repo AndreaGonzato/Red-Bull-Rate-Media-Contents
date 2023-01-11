@@ -135,8 +135,9 @@ router.get("/contents", async (req, res) => {
 
   const contents = await mongo
     .collection(dbCollections.CONTENTS)
-    .find()
+    .find()//.limit(10) // add this if you want to limit the response
     .toArray();
+    
 
   res.json(contents);
 });

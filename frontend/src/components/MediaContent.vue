@@ -22,7 +22,7 @@
     <div v-if="this.showVideo">
       <button
         @click.prevent="toggleShowVideo"
-        class="btn btn-primary close-button"
+        class="btn btn-secondary"
       >
         Close
       </button>
@@ -61,4 +61,6 @@ img {
 video{
     max-height: 400px;
 }
+
+
 </style>

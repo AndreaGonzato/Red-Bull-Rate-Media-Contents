@@ -2,7 +2,7 @@
     <div class="account">
         <h1>Account</h1>
 
-        <button @click.prevent="logout" class="btn btn-primary">Log out</button>
+        <button @click.prevent="logout" class="btn btn-danger">Log out</button>
     </div>
 </template>
 
