@@ -4,20 +4,21 @@
     <p>Welcome back {{ this.username }}</p>
 
     <div v-for="content in limitedContents">
-        <div class="content">
-          <MediaContent v-bind:the-title="content.title" v-bind:preview-img-url="content.previewUrl" v-bind:content-url="content.contentUrl"></MediaContent>
-        </div>
+      <div class="content">
+        <MediaContent
+          v-bind:the-id="content.id"
+          v-bind:the-title="content.title"
+          v-bind:preview-img-url="content.previewUrl"
+          v-bind:content-url="content.contentUrl"
+        ></MediaContent>
+      </div>
     </div>
 
     <div>
-      <button
-        @click.prevent="moreContents"
-        class="btn btn-primary"
-      >
+      <button @click.prevent="moreContents" class="btn btn-primary">
         More...
       </button>
     </div>
-
   </div>
 </template>
 
@@ -30,25 +31,24 @@ export default {
   name: "Feed",
   data() {
     return {
-        hostname: config.hostname,
-        username : '',
-        contents : [{}],
-        limitContents: 20,
+      hostname: config.hostname,
+      username: "",
+      contents: [{}],
+      limitContents: 20,
     };
   },
   components: {
-    MediaContent 
+    MediaContent,
   },
   computed: {
     limitedContents() {
-
       return this.contents.slice(0, this.limitContents);
       //return this.contents[0, this.limit];
-    }
+    },
   },
   mounted() {
     this.whoami();
-    this.$emit('message', {showAccount: true});
+    this.$emit("message", { showAccount: true });
     this.fetchContents();
   },
   methods: {
@@ -67,21 +67,19 @@ export default {
       const objUser = await resultJSON.json();
 
       this.username = objUser.username;
-
     },
-    async fetchContents(){
-        const resultJSON = await fetch(this.hostname + "/api/contents", {
-            method: "GET",
-            headers: {"Content-type": "application/json"},
-        });
-        const contentsObj = await resultJSON.json();
-        this.contents = contentsObj;
-        console.log(contentsObj); // TODO remove
-
+    async fetchContents() {
+      const resultJSON = await fetch(this.hostname + "/api/contents", {
+        method: "GET",
+        headers: { "Content-type": "application/json" },
+      });
+      const contentsObj = await resultJSON.json();
+      this.contents = contentsObj;
+      console.log(contentsObj); // TODO remove
     },
-    moreContents(){
-      this.limitContents += 20; 
-    } 
+    moreContents() {
+      this.limitContents += 20;
+    },
   },
 };
 </script>
@@ -91,7 +89,7 @@ export default {
   text-align: center;
 }
 
-.content{
+.content {
   margin-bottom: 3%;
 }
 </style>

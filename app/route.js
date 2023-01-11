@@ -143,4 +143,10 @@ router.get("/contents", async (req, res) => {
 });
 
 
+//API 5
+router.post("/contents", authenticateToken, async (req, res) => {
+
+});
+
+
 module.exports = router;

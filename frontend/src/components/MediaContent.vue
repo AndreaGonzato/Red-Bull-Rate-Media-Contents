@@ -44,6 +44,7 @@
 export default {
   name: "MediaContent",
   props: {
+    theId : String,
     theTitle: String,
     previewImgUrl: String,
     contentUrl: String,
