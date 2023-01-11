@@ -10,6 +10,7 @@
 
 <script>
 import config from "@/config.js";
+import cookieManager from "@/cookieManager.js";
 
 export default {
   name: "Feed",
@@ -20,12 +21,11 @@ export default {
     };
   },
   mounted() {
-    console.log("created");
     this.whoami();
   },
   methods: {
     async whoami() {
-      var jwt = this.getCookie("jwt");
+      var jwt = cookieManager.getCookie("jwt");
 
       // Set the Authorization header of the request
       var headers = new Headers();
@@ -41,22 +41,6 @@ export default {
 
       this.username = objUser.username;
 
-    },
-    getCookie(name) {
-      // Split the cookies string and get all individual name=value pairs in an array
-      var cookieArr = document.cookie.split(";");
-
-      // Loop through the array and find the named cookie
-      for (var i = 0; i < cookieArr.length; i++) {
-        var cookiePair = cookieArr[i].split("=");
-
-        if (name === cookiePair[0].trim()) {
-          return decodeURIComponent(cookiePair[1]);
-        }
-      }
-      console.log("no cookie for this site");
-      // If the named cookie does not exist, return null
-      return null;
     },
   },
 };
