@@ -1,18 +1,27 @@
 <template>
     <div class="content">
         <p><b>{{ theTitle }}</b></p>
-        <img v-bind:src="previewImgUrl"/>
+
+        <button @click.prevent="viewVideo">
+            <img v-bind:src="previewImgUrl" @click.prevent="viewVideo"/>
+        </button>
+        
     </div>
 </template>
 
 <script>
 
 export default{
-    name: "MediaCOntent",
+    name: "MediaContent",
     props : {
         theTitle : String,
         previewImgUrl: String
     },
+    methods:{
+        viewVideo(){
+            console.log("To implement");
+        }
+    }
 
 }
 </script>
