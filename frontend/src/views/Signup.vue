@@ -71,7 +71,7 @@ export default {
 
       const obj = await postRequest.json();
       if(obj.insertedId !== undefined){
-        // OK, user inserted in the DB
+        // OK, exist this user in the DB
       }else{
         // user not inserted
       }
