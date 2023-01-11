@@ -11,6 +11,7 @@
           v-bind:preview-img-url="content.previewUrl"
           v-bind:content-url="content.contentUrl"
           v-bind:likes-number="content.likes ? content.likes.length : 0"
+          v-bind:dislikes-number="content.dislikes ? content.likes.length : 0"
         ></MediaContent>
       </div>
     </div>

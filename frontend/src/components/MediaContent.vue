@@ -21,9 +21,8 @@
     <div class="div-close-like">
       <span class="like">
         <button class="btn btn-success">
-          <i class="fa-regular fa-thumbs-up"></i> Like
+          <i class="fa-regular fa-thumbs-up"></i> Like {{ likesNumber }}
         </button>
-        {{ likesNumber }}
       </span>
 
       <span v-if="this.showVideo" class="close">
@@ -34,7 +33,7 @@
 
       <span class="dislike">
         <button class="btn btn-danger">
-          <i class="fa-regular fa-thumbs-down"></i> Dislike
+          <i class="fa-regular fa-thumbs-down"></i> Dislike {{ dislikesNumber }}
         </button>
       </span>
     </div>
@@ -50,6 +49,7 @@ export default {
     previewImgUrl: String,
     contentUrl: String,
     likesNumber: Number,
+    dislikesNumber: Number,
   },
   data() {
     return {
