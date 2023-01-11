@@ -3,9 +3,6 @@
     <h1>Feed</h1>
     <p>This is the feed of {{ this.username }}</p>
 
-    <button @click.prevent="whoami" class="btn btn-primary">Who am i</button>
-
-
     <div v-for="content in contents">
         <div class="content">
           <MediaContent v-bind:the-title="content.title" v-bind:preview-img-url="content.previewUrl" v-bind:content-url="content.contentUrl"></MediaContent>
