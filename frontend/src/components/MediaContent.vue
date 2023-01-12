@@ -3,6 +3,7 @@
     <p>
       <b>{{ theTitle }}</b>
     </p>
+    <p>{{ likesList }}</p>
 
     <!--preview img-->
     <div v-if="!this.showVideo">
@@ -19,8 +20,9 @@
     </div>
 
     <div class="div-close-like">
+      <!-- like button-->
       <span class="like">
-        <button class="btn btn-success" @click.prevent="postLike">
+        <button class="btn btn-success" @click.prevent="clickOnLike">
           <i class="fa-regular fa-thumbs-up"></i> Like {{ this.likesNumber }}
         </button>
       </span>
@@ -31,6 +33,7 @@
         </button>
       </span>
 
+      <!-- dislike button-->
       <span class="dislike">
         <button class="btn btn-danger">
           <i class="fa-regular fa-thumbs-down"></i> Dislike
@@ -48,12 +51,15 @@ import cookieManager from "@/cookieManager.js";
 export default {
   name: "MediaContent",
   props: {
+    userId: Number,
     theId: String,
     theTitle: String,
     previewImgUrl: String,
     contentUrl: String,
     likesNumber: Number,
     dislikesNumber: Number,
+    likesList : Object,
+    dislikesList : Object
   },
   data() {
     return {
@@ -65,6 +71,15 @@ export default {
   methods: {
     toggleShowVideo() {
       this.showVideo = !this.showVideo;
+    },
+    async clickOnLike(){
+      if(this.likesList.includes(this.userId)){
+        // user already put a like to this content
+        this.removeLike();
+      }else{
+        // add a like
+        this.postLike();
+      }
     },
     async postLike() {
       // update backend
@@ -86,11 +101,38 @@ export default {
       const obj = await postRequest.json();
       if (!obj.error) {
         // update frontend
-        this.$emit("like", { contentId: this.theId });
+        this.$emit("like", { contentId: this.theId, action: "add"});
       } else {
         // you already like this content, no need to update frontend
       }
     },
+    async removeLike(){
+      // update backend
+
+      // require jwt token
+      var jwt = cookieManager.getCookie("jwt");
+      // Set the Authorization header of the request
+      var headers = new Headers();
+      headers.append("Authorization", "Bearer " + jwt);
+      headers.append("Content-type", "application/json");
+
+      const postRequest = await fetch(
+        config.hostname + "/api/social/like/" + this.theId,
+        {
+          method: "DELETE",
+          headers,
+          body: JSON.stringify({}),
+        }
+      );
+
+      const obj = await postRequest.json();
+      if (!obj.error) {
+        // update frontend
+        this.$emit("like", { contentId: this.theId, action: "remove" });
+      } else {
+        // you already remove a like to this content, no need to update frontend
+      }
+    }
   },
 };
 </script>

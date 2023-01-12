@@ -6,12 +6,15 @@
     <div v-for="content in limitedContents">
       <div class="content">
         <MediaContent
+          v-bind:user-id="this.userId"
           v-bind:the-id="content.id"
           v-bind:the-title="content.title"
           v-bind:preview-img-url="content.previewUrl"
           v-bind:content-url="content.contentUrl"
           v-bind:likes-number="content.likes ? content.likes.length : 0"
           v-bind:dislikes-number="content.dislikes ? content.likes.length : 0"
+          v-bind:likesList="content.likes ? content.likes : []"
+          v-bind:dislikesList="content.dislikes ? content.dislikes : []"
           @like="handleLike"
         ></MediaContent>
       </div>
@@ -68,7 +71,7 @@ export default {
       });
 
       const objUser = await resultJSON.json();
-      this.userId = objUser.id; // TODO 
+      this.userId = objUser.id; // TODO
       this.username = objUser.username;
     },
     async fetchContents() {
@@ -83,13 +86,28 @@ export default {
       this.limitContents += 20;
     },
     handleLike(message) {
-      const element = this.contents.find(el => el.id === message.contentId);
+      const content = this.contents.find((el) => el.id === message.contentId);
+      const action = message.action;
+
       const userID = this.userId;
 
-      if(element.likes === undefined){
-        element.likes = [userID]
-      }else{
-        element.likes.append(userID);
+      if (action === "remove") {
+        // remove a like
+        for (let i = 0; i < content.likes.length; i++) {
+          if (content.likes[i] === userID) {
+            content.likes.splice(i, 1);
+            break;
+          }
+        }
+      }
+
+      if (action === "add") {
+        // add a like
+        if (content.likes === undefined) {
+          content.likes = [userID];
+        } else {
+          content.likes.push(userID);
+        }
       }
     },
   },
