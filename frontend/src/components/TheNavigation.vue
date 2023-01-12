@@ -24,6 +24,10 @@
         <router-link to="/feed">Feed</router-link>
       </span>
 
+      <span v-if="showAccount">
+        <router-link to="/trend">Most liked</router-link>
+      </span>
+
 
       <span v-if="showAccount">
         <router-link to="/account">Account</router-link>

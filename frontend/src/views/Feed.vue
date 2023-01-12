@@ -51,9 +51,9 @@ export default {
       //return this.contents[0, this.limit];
     },
   },
-  mounted() {
+  async mounted() {
     this.whoami();
-    this.fetchContents();
+    await this.fetchContents();
   },
   methods: {
     async whoami() {
@@ -73,7 +73,7 @@ export default {
       this.username = objUser.username;
     },
     async fetchContents() {
-      const resultJSON = await fetch(this.hostname + "/api/contents", {
+      const resultJSON = await fetch(config.hostname + "/api/contents", {
         method: "GET",
         headers: { "Content-type": "application/json" },
       });
@@ -142,7 +142,5 @@ export default {
   text-align: center;
 }
 
-.content {
-  margin-bottom: 3%;
-}
+
 </style>
