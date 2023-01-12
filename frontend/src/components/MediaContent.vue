@@ -3,7 +3,7 @@
     <p>
       <b>{{ contentObj.title }}</b>
     </p>
-    <p>{{ likesList }}</p>
+    <p>{{ contentObj.likes }}</p>
 
     <!--preview img-->
     <div v-if="!this.showVideo">
@@ -55,11 +55,8 @@ export default {
 
     contentObj: Object,
 
-    theId: String,
     likesNumber: Number,
     dislikesNumber: Number,
-    likesList: Object,
-    dislikesList: Object,
   },
   data() {
     return {
@@ -73,7 +70,7 @@ export default {
       this.showVideo = !this.showVideo;
     },
     async clickOnLike() {
-      if (this.likesList.includes(this.userId)) {
+      if (this.contentObj.likes.includes(this.userId)) {
         // user already put a like to this content -> you want to remove it
         this.removeLike();
       } else {
@@ -108,7 +105,7 @@ export default {
       // update frontend
       this.$emit("like", { contentId: this.contentObj.id, action: "remove" });
 
-      // update backend
+      // I will update the backend now
 
       // require jwt token
       var jwt = cookieManager.getCookie("jwt");

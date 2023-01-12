@@ -12,7 +12,6 @@
 
           v-bind:likes-number="content.likes ? content.likes.length : 0"
           v-bind:dislikes-number="content.dislikes ? content.dislikes.length : 0"
-          v-bind:likesList="content.likes ? content.likes : []"
           v-bind:dislikesList="content.dislikes ? content.dislikes : []"
           @like="handleLike"
         ></MediaContent>
