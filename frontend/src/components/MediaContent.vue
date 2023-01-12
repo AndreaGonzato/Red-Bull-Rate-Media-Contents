@@ -58,8 +58,8 @@ export default {
     contentUrl: String,
     likesNumber: Number,
     dislikesNumber: Number,
-    likesList : Object,
-    dislikesList : Object
+    likesList: Object,
+    dislikesList: Object,
   },
   data() {
     return {
@@ -72,17 +72,21 @@ export default {
     toggleShowVideo() {
       this.showVideo = !this.showVideo;
     },
-    async clickOnLike(){
-      if(this.likesList.includes(this.userId)){
-        // user already put a like to this content
+    async clickOnLike() {
+      if (this.likesList.includes(this.userId)) {
+        // user already put a like to this content -> you want to remove it
         this.removeLike();
-      }else{
+      } else {
         // add a like
         this.postLike();
       }
     },
     async postLike() {
+      // update frontend
+      this.$emit("like", { contentId: this.theId, action: "add" });
+
       // update backend
+
       var jwt = cookieManager.getCookie("jwt");
       // Set the Authorization header of the request
       var headers = new Headers();
@@ -98,15 +102,12 @@ export default {
         }
       );
 
-      const obj = await postRequest.json();
-      if (!obj.error) {
-        // update frontend
-        this.$emit("like", { contentId: this.theId, action: "add"});
-      } else {
-        // you already like this content, no need to update frontend
-      }
+      //const obj = await postRequest.json();
     },
-    async removeLike(){
+    async removeLike() {
+      // update frontend
+      this.$emit("like", { contentId: this.theId, action: "remove" });
+
       // update backend
 
       // require jwt token
@@ -125,14 +126,9 @@ export default {
         }
       );
 
-      const obj = await postRequest.json();
-      if (!obj.error) {
-        // update frontend
-        this.$emit("like", { contentId: this.theId, action: "remove" });
-      } else {
-        // you already remove a like to this content, no need to update frontend
-      }
-    }
+      //const obj = await postRequest.json();
+
+    },
   },
 };
 </script>
