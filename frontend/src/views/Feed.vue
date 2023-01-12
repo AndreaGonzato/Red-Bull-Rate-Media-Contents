@@ -6,13 +6,12 @@
     <div v-for="content in limitedContents">
       <div class="content">
         <MediaContent
-          v-bind:user-id="this.userId"
-          v-bind:the-id="content.id"
-          v-bind:the-title="content.title"
-          v-bind:preview-img-url="content.previewUrl"
-          v-bind:content-url="content.contentUrl"
+          v-bind:user-id="parseInt(this.userId)"
+
+          v-bind:content-obj="content"
+
           v-bind:likes-number="content.likes ? content.likes.length : 0"
-          v-bind:dislikes-number="content.dislikes ? content.likes.length : 0"
+          v-bind:dislikes-number="content.dislikes ? content.dislikes.length : 0"
           v-bind:likesList="content.likes ? content.likes : []"
           v-bind:dislikesList="content.dislikes ? content.dislikes : []"
           @like="handleLike"

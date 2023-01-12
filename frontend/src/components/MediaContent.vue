@@ -1,21 +1,21 @@
 <template>
   <div class="content">
     <p>
-      <b>{{ theTitle }}</b>
+      <b>{{ contentObj.title }}</b>
     </p>
     <p>{{ likesList }}</p>
 
     <!--preview img-->
     <div v-if="!this.showVideo">
       <button @click.prevent="toggleShowVideo">
-        <img v-bind:src="previewImgUrl" />
+        <img v-bind:src="contentObj.previewUrl" />
       </button>
     </div>
 
     <!--video-->
     <div v-if="this.showVideo">
       <video controls>
-        <source v-bind:src="contentUrl" type="video/mp4" />
+        <source v-bind:src="contentObj.contentUrl" type="video/mp4" />
       </video>
     </div>
 
@@ -52,10 +52,10 @@ export default {
   name: "MediaContent",
   props: {
     userId: Number,
+
+    contentObj: Object,
+
     theId: String,
-    theTitle: String,
-    previewImgUrl: String,
-    contentUrl: String,
     likesNumber: Number,
     dislikesNumber: Number,
     likesList: Object,
@@ -83,7 +83,7 @@ export default {
     },
     async postLike() {
       // update frontend
-      this.$emit("like", { contentId: this.theId, action: "add" });
+      this.$emit("like", { contentId: this.contentObj.id, action: "add" });
 
       // update backend
 
@@ -94,7 +94,7 @@ export default {
       headers.append("Content-type", "application/json");
 
       const postRequest = await fetch(
-        config.hostname + "/api/social/like/" + this.theId,
+        config.hostname + "/api/social/like/" + this.contentObj.id,
         {
           method: "POST",
           headers,
@@ -106,7 +106,7 @@ export default {
     },
     async removeLike() {
       // update frontend
-      this.$emit("like", { contentId: this.theId, action: "remove" });
+      this.$emit("like", { contentId: this.contentObj.id, action: "remove" });
 
       // update backend
 
@@ -118,7 +118,7 @@ export default {
       headers.append("Content-type", "application/json");
 
       const postRequest = await fetch(
-        config.hostname + "/api/social/like/" + this.theId,
+        config.hostname + "/api/social/like/" + this.contentObj.id,
         {
           method: "DELETE",
           headers,
