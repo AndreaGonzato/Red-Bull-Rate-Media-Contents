@@ -82,7 +82,7 @@ export default {
       // update frontend
       this.$emit("like", { contentId: this.contentObj.id, action: "add" });
 
-      // update backend
+      // I'm going to update the backend now
 
       var jwt = cookieManager.getCookie("jwt");
       // Set the Authorization header of the request
@@ -105,7 +105,7 @@ export default {
       // update frontend
       this.$emit("like", { contentId: this.contentObj.id, action: "remove" });
 
-      // I will update the backend now
+      // I'm going to update the backend now
 
       // require jwt token
       var jwt = cookieManager.getCookie("jwt");
