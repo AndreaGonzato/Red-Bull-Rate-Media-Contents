@@ -11,8 +11,9 @@
           v-bind:content-obj="content"
           v-bind:likes-number="content.likes ? content.likes.length : 0"
           v-bind:dislikes-number="content.dislikes ? content.dislikes.length : 0"
-          
+
           @like="handleLike"
+          @dislike="handleDislike"
         ></MediaContent>
       </div>
     </div>
@@ -107,6 +108,31 @@ export default {
         }
       }
     },
+    handleDislike(message){
+      const content = this.contents.find((el) => el.id === message.contentId);
+      const action = message.action;
+
+      const userID = this.userId;
+
+      if (action === "remove") {
+        // remove a dislike
+        for (let i = 0; i < content.dislikes.length; i++) {
+          if (content.dislikes[i] === userID) {
+            content.dislikes.splice(i, 1);
+            break;
+          }
+        }
+      }
+
+      if (action === "add") {
+        // add a dislike
+        if (content.dislikes === undefined) {
+          content.dislikes = [userID];
+        } else {
+          content.dislikes.push(userID);
+        }
+      }
+    }
   },
 };
 </script>
