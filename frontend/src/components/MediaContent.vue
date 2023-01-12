@@ -258,4 +258,8 @@ video {
 .div-close-like .dislike {
   grid-area: dislike;
 }
+
+.content{
+  margin-bottom: 6em;
+}
 </style>

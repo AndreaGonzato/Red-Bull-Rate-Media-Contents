@@ -1,51 +1,59 @@
 <template>
-  <div class="signup">
-    <h1>Signup</h1>
+  <div class="all">
+    <div v-if="this.error">
+      <ErrorPage></ErrorPage>
+    </div>
 
-    <p>Please fill this form to create an account!</p>
+    <div v-if="!this.error" class="signup">
+      <h1>Signup</h1>
 
-    <form>
-      <div class="row">
-        <input
-          type="text"
-          v-model="username"
-          name="email"
-          class="form-control"
-          placeholder="Username"
-        />
-      </div>
+      <p>Please fill this form to create an account!</p>
 
-      <div class="row">
-        <input
-          type="text"
-          v-model="email"
-          name="email"
-          class="form-control"
-          placeholder="Email"
-        />
-      </div>
+      <form>
+        <div class="row">
+          <input
+            type="text"
+            v-model="username"
+            name="email"
+            class="form-control"
+            placeholder="Username"
+          />
+        </div>
 
-      <div class="row">
-        <input
-          type="password"
-          v-model="password"
-          name="password"
-          class="form-control"
-          placeholder="Password"
-        />
-      </div>
+        <div class="row">
+          <input
+            type="text"
+            v-model="email"
+            name="email"
+            class="form-control"
+            placeholder="Email"
+          />
+        </div>
 
-      <button @click.prevent="signup" class="btn btn-primary">Sign up</button>
-    </form>
+        <div class="row">
+          <input
+            type="password"
+            v-model="password"
+            name="password"
+            class="form-control"
+            placeholder="Password"
+          />
+        </div>
 
-    <p>
-      Already have an account? <router-link to="/login">Login here</router-link>
-    </p>
+        <button @click.prevent="signup" class="btn btn-primary">Sign up</button>
+      </form>
+
+      <p>
+        Already have an account?
+        <router-link to="/login">Login here</router-link>
+      </p>
+    </div>
   </div>
 </template>
 
 <script>
 import config from "@/config.js";
+import ErrorPage from "@/components/ErrorPage.vue";
 
 export default {
   name: "Signup",
@@ -54,28 +62,32 @@ export default {
       email: "",
       password: "",
       username: "",
-      hostname: config.hostname,
+      error: false,
     };
   },
+  components: {
+    ErrorPage,
+  },
   methods: {
-    async signup() {      
-      const postRequest = await fetch(this.hostname + "/api/auth/signup", {
+    async signup() {
+      const postRequest = await fetch(config.hostname + "/api/auth/signup", {
         method: "POST",
         headers: { "Content-type": "application/json" },
         body: JSON.stringify({
           username: this.username,
           email: this.email,
-          password: this.password
+          password: this.password,
         }),
       });
 
       const obj = await postRequest.json();
-      if(obj.insertedId !== undefined){
-        // OK, exist this user in the DB
-      }else{
+      if (obj.insertedId !== undefined) {
+        // OK
+        // go the the Feed page
+        this.$router.push({ name: "Feed" });
+      } else {
         // user not inserted
       }
-      
     },
   },
 };
@@ -90,7 +102,7 @@ button {
   margin-bottom: 1em;
 }
 
-.signup {
+.all {
   text-align: center;
 }
 
