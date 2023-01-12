@@ -70,12 +70,18 @@ export default {
       this.showVideo = !this.showVideo;
     },
     async clickOnLike() {
-      if (this.contentObj.likes.includes(this.userId)) {
-        // user already put a like to this content -> you want to remove it
-        this.removeLike();
-      } else {
-        // add a like
+      if (this.contentObj.likes === undefined) {
+        // add the first like to this content
+        this.contentObj.likes = [];
         this.postLike();
+      } else {
+        if (this.contentObj.likes.includes(this.userId)) {
+          // user already put a like to this content -> you want to remove it
+          this.removeLike();
+        } else {
+          // add a like
+          this.postLike();
+        }
       }
     },
     async postLike() {
@@ -124,7 +130,6 @@ export default {
       );
 
       //const obj = await postRequest.json();
-
     },
   },
 };
