@@ -3,7 +3,6 @@
     <p>
       <b>{{ contentObj.title }}</b>
     </p>
-    <p>{{ contentObj.likes }}</p>
 
     <!--preview img-->
     <div v-if="!this.showVideo">
@@ -66,6 +65,19 @@ export default {
       liked: false,
       disliked: false
     };
+  },
+  mounted(){
+    if(this.contentObj.likes !== undefined && this.contentObj.likes.includes(this.userId)){
+      // you put like in a previous session
+      this.likeStyle = 'fa-solid';
+      this.liked = true
+    }
+
+    if(this.contentObj.dislikes !== undefined && this.contentObj.dislikes.includes(this.userId)){
+      // you put dislike in a previous session
+      this.dislikeStyle = 'fa-solid';
+      this.disliked = true
+    }
   },
   methods: {
     toggleShowVideo() {
