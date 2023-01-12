@@ -7,11 +7,11 @@
       <div class="content">
         <MediaContent
           v-bind:user-id="parseInt(this.userId)"
-
           v-bind:content-obj="content"
           v-bind:likes-number="content.likes ? content.likes.length : 0"
-          v-bind:dislikes-number="content.dislikes ? content.dislikes.length : 0"
-
+          v-bind:dislikes-number="
+            content.dislikes ? content.dislikes.length : 0
+          "
           @like="handleLike"
           @dislike="handleDislike"
         ></MediaContent>
@@ -30,6 +30,7 @@
 import config from "@/config.js";
 import cookieManager from "@/cookieManager.js";
 import MediaContent from "@/components/MediaContent.vue";
+import userManager from "@/userManager.js";
 
 export default {
   name: "Feed",
@@ -52,26 +53,13 @@ export default {
     },
   },
   async mounted() {
-    this.whoami();
+    const user = await userManager.whoami();
+    this.userId = user.id;
+    this.username = user.username;
+
     await this.fetchContents();
   },
   methods: {
-    async whoami() {
-      var jwt = cookieManager.getCookie("jwt");
-
-      // Set the Authorization header of the request
-      var headers = new Headers();
-      headers.append("Authorization", "Bearer " + jwt);
-      headers.append("Content-type", "application/json");
-      const resultJSON = await fetch(this.hostname + "/api/social/whoami", {
-        method: "GET",
-        headers: headers,
-      });
-
-      const objUser = await resultJSON.json();
-      this.userId = objUser.id; // TODO
-      this.username = objUser.username;
-    },
     async fetchContents() {
       const resultJSON = await fetch(config.hostname + "/api/contents", {
         method: "GET",
@@ -108,7 +96,7 @@ export default {
         }
       }
     },
-    handleDislike(message){
+    handleDislike(message) {
       const content = this.contents.find((el) => el.id === message.contentId);
       const action = message.action;
 
@@ -132,7 +120,7 @@ export default {
           content.dislikes.push(userID);
         }
       }
-    }
+    },
   },
 };
 </script>
@@ -141,6 +129,4 @@ export default {
 .feed {
   text-align: center;
 }
-
-
 </style>
