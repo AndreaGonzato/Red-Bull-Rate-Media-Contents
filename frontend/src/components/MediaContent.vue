@@ -23,7 +23,7 @@
       <!-- like button-->
       <span class="like">
         <button class="btn btn-success" @click.prevent="clickOnLike">
-          <i class="fa-regular fa-thumbs-up"></i> Like {{ this.likesNumber }}
+          <i class="fa-thumbs-up" :class="likeStyle"></i> Like {{ this.likesNumber }}
         </button>
       </span>
 
@@ -36,7 +36,7 @@
       <!-- dislike button-->
       <span class="dislike">
         <button class="btn btn-danger" @click.prevent="clickOnDislike">
-          <i class="fa-regular fa-thumbs-down"></i> Dislike
+          <i class="fa-thumbs-down" :class="dislikeStyle"></i> Dislike
           {{ this.dislikesNumber }}
         </button>
       </span>
@@ -61,8 +61,10 @@ export default {
   data() {
     return {
       showVideo: false,
-      likes: 0,
-      dislike: 0,
+      likeStyle: 'fa-regular',
+      dislikeStyle: 'fa-regular',
+      liked: false,
+      disliked: false
     };
   },
   methods: {
@@ -102,6 +104,7 @@ export default {
     async postLike() {
       // update frontend
       this.$emit("like", { contentId: this.contentObj.id, action: "add" });
+      this.likeStyle = 'fa-solid'
 
       // I'm going to update the backend now
 
@@ -125,6 +128,7 @@ export default {
     async postDislike() {
       // update frontend
       this.$emit("dislike", { contentId: this.contentObj.id, action: "add" });
+      this.dislikeStyle = 'fa-solid'
 
       // I'm going to update the backend now
 
@@ -146,6 +150,7 @@ export default {
     async removeLike() {
       // update frontend
       this.$emit("like", { contentId: this.contentObj.id, action: "remove" });
+      this.likeStyle = 'fa-regular'
 
       // I'm going to update the backend now
 
@@ -173,6 +178,8 @@ export default {
         contentId: this.contentObj.id,
         action: "remove",
       });
+      this.dislikeStyle = 'fa-regular'
+  
 
       // I'm going to update the backend now
 
