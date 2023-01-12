@@ -1,7 +1,7 @@
 <template>
   <div class="all">
     <div v-if="this.error">
-      <ErrorPage></ErrorPage>
+      <ErrorPage v-bind:the-message="this.message"></ErrorPage>
     </div>
 
     <div v-if="!this.error" class="signup">
@@ -63,6 +63,7 @@ export default {
       password: "",
       username: "",
       error: false,
+      message: ''
     };
   },
   components: {
@@ -87,6 +88,8 @@ export default {
         this.$router.push({ name: "Feed" });
       } else {
         // user not inserted
+        this.error = true;
+        this.message =  obj.message;
       }
     },
   },

@@ -76,15 +76,15 @@ router.post("/auth/signup", async (req, res) => {
   const nextUserID = await dbManager.getNextId(dbCollections.USERS);
   user.id = nextUserID;
 
-  if (user.username === undefined || user.email === undefined || user.password === undefined) {
-    return res.status(500).send({message : "you need to specify all the fields of a user: (username, email, password)"});
+  if (user.username === undefined || user.email === undefined || user.password === undefined || user.username === '' || user.email === '' || user.password === '') {
+    return res.status(500).send({message : "You need to specify all the fields of a user: (username, email, password)"});
   }
 
   // check that the username is unique
   const userWithSameUsername = await mongo.collection(dbCollections.USERS).findOne({username: user.username});
   if(userWithSameUsername){
     // it already exist an user with that username 
-    return res.status(500).send({message: "an user with username: "+userWithSameUsername.username +" already exist"});
+    return res.status(500).send({message: "Username: "+userWithSameUsername.username +" already exist, choose another one!"});
   }
 
   const result = await mongo.collection(dbCollections.USERS).insertOne(user);
