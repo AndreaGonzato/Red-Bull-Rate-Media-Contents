@@ -105,6 +105,12 @@ export default {
       // update frontend
       this.$emit("like", { contentId: this.contentObj.id, action: "add" });
       this.likeStyle = 'fa-solid'
+      this.liked = true
+
+      if(this.disliked){
+        // user disliked this content previously -> the user change idea and now like this content, so remove the dislike
+        await this.removeDislike();
+      }
 
       // I'm going to update the backend now
 
@@ -129,6 +135,12 @@ export default {
       // update frontend
       this.$emit("dislike", { contentId: this.contentObj.id, action: "add" });
       this.dislikeStyle = 'fa-solid'
+      this.disliked = true;
+
+      if(this.liked){
+        // user liked this content previously -> the user change idea and now dislike this content, so remove the like
+        await this.removeLike();
+      }
 
       // I'm going to update the backend now
 
@@ -151,6 +163,7 @@ export default {
       // update frontend
       this.$emit("like", { contentId: this.contentObj.id, action: "remove" });
       this.likeStyle = 'fa-regular'
+      this.liked = false;
 
       // I'm going to update the backend now
 
@@ -179,8 +192,8 @@ export default {
         action: "remove",
       });
       this.dislikeStyle = 'fa-regular'
+      this.disliked = false;
   
-
       // I'm going to update the backend now
 
       // require jwt token
