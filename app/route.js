@@ -193,8 +193,33 @@ router.delete("/social/like/:id", authenticateToken, async (req, res) => {
     return res.send({message: `user with id ${userID} do no has a like to this content to remove`});
   }
 
-
 });
+
+
+//API 7
+// add a dislike to the content with the given id
+router.post("/social/like/:id", authenticateToken, async (req, res) => {
+  const userID = req.user.id;
+  const contentID = req.params.id;
+
+  const mongo = db.getDb();
+
+  const content = await mongo.collection(dbCollections.CONTENTS).findOne({id: contentID}); 
+
+  if(content.dislikes === undefined){
+    content.dislikes = [];
+  }
+
+  if(content.dislikes.includes(userID)){
+    // the user with userID has already put a dislike to this content previously
+    return res.send({message: "you already put a like to this content previously", error: true});
+  }
+
+  const result = await mongo.collection(dbCollections.CONTENTS).updateOne({id: contentID}, {$push: {dislikes: userID}}); 
+
+  res.send({result});
+});
+
 
 
 

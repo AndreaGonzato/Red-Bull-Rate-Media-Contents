@@ -9,9 +9,9 @@
           v-bind:user-id="parseInt(this.userId)"
 
           v-bind:content-obj="content"
-
           v-bind:likes-number="content.likes ? content.likes.length : 0"
           v-bind:dislikes-number="content.dislikes ? content.dislikes.length : 0"
+          
           @like="handleLike"
         ></MediaContent>
       </div>
