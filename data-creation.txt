@@ -4679,3 +4679,25 @@ db.contents.insertMany([
   }
 ]);
 
+
+
+
+
+
+
+db.contents.updateMany({}, {$set: {likes: []}})
+db.contents.updateMany({}, {$set: {dislikes: []}})
+
+
+
+
+
+
+db.contents.aggregate([
+    {
+        $addFields: { likes_number: {$size: { "$ifNull": [ "$likes", [] ] } } }
+    }, 
+    {   
+        $sort: {"likes_number":-1} 
+    }
+])

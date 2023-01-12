@@ -247,5 +247,25 @@ router.delete("/social/dislike/:id", authenticateToken, async (req, res) => {
 
 
 
+// API 9
+// get the top 10 content with most likes
+router.get("/trend", async (req, res) => {
+  const mongo = db.getDb();
+
+  const contents = await mongo
+    .collection(dbCollections.CONTENTS)
+    .aggregate([{
+      $addFields: { likes_number: {$size: { "$ifNull": [ "$likes", [] ] } } }
+    },{
+      $sort: {"likes_number":-1} 
+    }])
+    .limit(10)
+    .toArray();
+    
+  res.json(contents);
+});
+
+
+
 
 module.exports = router;
