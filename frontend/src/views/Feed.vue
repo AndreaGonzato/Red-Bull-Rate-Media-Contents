@@ -19,8 +19,8 @@
     </div>
 
     <div>
-      <button @click.prevent="moreContents" class="btn btn-primary">
-        More...
+      <button @click.prevent="moreContents" class="btn btn-primary btn-more">
+        Load more
       </button>
     </div>
   </div>
@@ -28,7 +28,6 @@
 
 <script>
 import config from "@/config.js";
-import cookieManager from "@/cookieManager.js";
 import MediaContent from "@/components/MediaContent.vue";
 import userManager from "@/userManager.js";
 
@@ -56,6 +55,9 @@ export default {
     const user = await userManager.whoami();
     this.userId = user.id;
     this.username = user.username;
+
+    // tell the app to show account in the nav menu and remove login and signin
+    this.$emit("message", { showAccount: true });
 
     await this.fetchContents();
   },
@@ -128,5 +130,9 @@ export default {
 <style scoped>
 .feed {
   text-align: center;
+}
+
+.btn-more {
+  margin-bottom: 5em;
 }
 </style>

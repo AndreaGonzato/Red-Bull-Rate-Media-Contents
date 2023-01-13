@@ -2,7 +2,7 @@
   <div class="trend">
     <h1>Most Liked</h1>
 
-    <div v-for="content in trendContents">
+    <div v-for="content in trendContents" class="all-trend-contents">
       <div class="content">
         <MediaContent
           v-bind:user-id="parseInt(this.userId)"
@@ -16,6 +16,7 @@
         ></MediaContent>
       </div>
     </div>
+    <div class="empty-footer"></div>
   </div>
 </template>
 
@@ -39,10 +40,13 @@ export default {
     this.userId = user.id;
     this.username = user.username;
 
+    // tell the app to show account in the nav menu and remove login and signin
+    this.$emit("message", { showAccount: true });
+
     this.fetchMostLikedContents();
   },
-  components:{
-    MediaContent
+  components: {
+    MediaContent,
   },
   methods: {
     async fetchMostLikedContents() {
@@ -54,7 +58,9 @@ export default {
       this.trendContents = trendContentsObj;
     },
     handleLike(message) {
-      const content = this.trendContents.find((el) => el.id === message.contentId);
+      const content = this.trendContents.find(
+        (el) => el.id === message.contentId
+      );
       const action = message.action;
 
       const userID = this.userId;
@@ -79,7 +85,9 @@ export default {
       }
     },
     handleDislike(message) {
-      const content = this.trendContents.find((el) => el.id === message.contentId);
+      const content = this.trendContents.find(
+        (el) => el.id === message.contentId
+      );
       const action = message.action;
 
       const userID = this.userId;
@@ -102,7 +110,7 @@ export default {
           content.dislikes.push(userID);
         }
       }
-    }
+    },
   },
 };
 </script>
@@ -110,5 +118,9 @@ export default {
 <style scoped>
 .trend {
   text-align: center;
+}
+
+.empty-footer {
+  height: 50px;
 }
 </style>

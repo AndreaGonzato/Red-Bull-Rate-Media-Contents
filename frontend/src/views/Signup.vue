@@ -75,7 +75,6 @@ export default {
       const obj = await postRequest.json();
       if (obj.insertedId !== undefined) {
         // OK
-
         // go the the Login page
         this.$router.push({ name: "Login" });
       } else {
