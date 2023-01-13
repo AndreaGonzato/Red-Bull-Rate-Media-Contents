@@ -19,6 +19,8 @@
           @like="handleLike"
           @dislike="handleDislike"
         ></MediaContent>
+
+        <hr/>
       </div>
     </div>
     <div class="empty-footer"></div>
@@ -121,6 +123,12 @@ export default {
 </script>
 
 <style scoped>
+
+hr{
+  max-width: 600px;
+  margin: auto;
+}
+
 .trend {
   text-align: center;
 }

@@ -15,6 +15,8 @@
           @like="handleLike"
           @dislike="handleDislike"
         ></MediaContent>
+
+        <hr/>
       </div>
     </div>
 
@@ -128,11 +130,17 @@ export default {
 </script>
 
 <style scoped>
+
+hr{
+  max-width: 600px;
+  margin: auto;
+}
 .feed {
   text-align: center;
 }
 
 .btn-more {
+  margin-top: 3em;
   margin-bottom: 5em;
 }
 </style>

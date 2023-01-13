@@ -1,6 +1,6 @@
 <template>
   <div class="content">
-    <p>
+    <p class="title">
       <b>{{ getTitle }}</b>
     </p>
 
@@ -262,6 +262,10 @@ video {
   max-height: 400px;
 }
 
+.title{
+  margin-top: 1em;
+}
+
 .div-close-like {
   display: grid;
   grid-gap: 10px;
@@ -269,6 +273,7 @@ video {
   max-width: 400px;
   margin: auto;
   margin-top: 0.5em;
+  margin-bottom: 2em;
   grid-template-areas: "like  close dislike ";
 }
 
@@ -284,7 +289,5 @@ video {
   grid-area: dislike;
 }
 
-.content{
-  margin-bottom: 5em;
-}
+
 </style>
