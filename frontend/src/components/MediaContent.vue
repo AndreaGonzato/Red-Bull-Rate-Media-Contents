@@ -18,7 +18,7 @@
       </video>
     </div>
 
-    <div class="div-close-like">
+    <div class="div-close-like" v-if="this.showVideo">
       <!-- like button-->
       <span class="like">
         <button class="btn btn-success" @click.prevent="clickOnLike">
@@ -26,7 +26,7 @@
         </button>
       </span>
 
-      <span v-if="this.showVideo" class="close">
+      <span class="close">
         <button @click.prevent="toggleShowVideo" class="btn btn-secondary">
           Close
         </button>
@@ -70,13 +70,13 @@ export default {
     if(this.contentObj.likes !== undefined && this.contentObj.likes.includes(this.userId)){
       // you put like in a previous session
       this.likeStyle = 'fa-solid';
-      this.liked = true
+      this.liked = true;
     }
 
     if(this.contentObj.dislikes !== undefined && this.contentObj.dislikes.includes(this.userId)){
       // you put dislike in a previous session
       this.dislikeStyle = 'fa-solid';
-      this.disliked = true
+      this.disliked = true;
     }
   },
   methods: {
