@@ -1,7 +1,7 @@
 <template>
   <div class="content">
     <p>
-      <b>{{ contentObj.title }}</b>
+      <b>{{ getTitle }}</b>
     </p>
 
     <!--preview img-->
@@ -18,11 +18,19 @@
       </video>
     </div>
 
+    <div v-if="!this.showVideo">
+      <p>
+        {{ this.contentObj.likes ? this.contentObj.likes.length : 0 }}
+        <i class="fa-thumbs-up fa-regular"></i>
+      </p>
+    </div>
+
     <div class="div-close-like" v-if="this.showVideo">
       <!-- like button-->
       <span class="like">
         <button class="btn btn-success" @click.prevent="clickOnLike">
-          <i class="fa-thumbs-up" :class="likeStyle"></i> Like {{ this.likesNumber }}
+          <i class="fa-thumbs-up" :class="likeStyle"></i> Like
+          {{ this.likesNumber }}
         </button>
       </span>
 
@@ -54,28 +62,45 @@ export default {
 
     contentObj: Object,
 
+    rankLikes: 0,
+
     likesNumber: Number,
     dislikesNumber: Number,
   },
   data() {
     return {
       showVideo: false,
-      likeStyle: 'fa-regular',
-      dislikeStyle: 'fa-regular',
+      likeStyle: "fa-regular",
+      dislikeStyle: "fa-regular",
       liked: false,
-      disliked: false
+      disliked: false,
     };
   },
-  mounted(){
-    if(this.contentObj.likes !== undefined && this.contentObj.likes.includes(this.userId)){
+  computed: {
+    getTitle() {
+      if (this.rankLikes === undefined) {
+        return this.contentObj.title;
+      } else {
+        return "#" + this.rankLikes + " - " + this.contentObj.title;
+      }
+    },
+  },
+  mounted() {
+    if (
+      this.contentObj.likes !== undefined &&
+      this.contentObj.likes.includes(this.userId)
+    ) {
       // you put like in a previous session
-      this.likeStyle = 'fa-solid';
+      this.likeStyle = "fa-solid";
       this.liked = true;
     }
 
-    if(this.contentObj.dislikes !== undefined && this.contentObj.dislikes.includes(this.userId)){
+    if (
+      this.contentObj.dislikes !== undefined &&
+      this.contentObj.dislikes.includes(this.userId)
+    ) {
       // you put dislike in a previous session
-      this.dislikeStyle = 'fa-solid';
+      this.dislikeStyle = "fa-solid";
       this.disliked = true;
     }
   },
@@ -116,10 +141,10 @@ export default {
     async postLike() {
       // update frontend
       this.$emit("like", { contentId: this.contentObj.id, action: "add" });
-      this.likeStyle = 'fa-solid'
-      this.liked = true
+      this.likeStyle = "fa-solid";
+      this.liked = true;
 
-      if(this.disliked){
+      if (this.disliked) {
         // user disliked this content previously -> the user change idea and now like this content, so remove the dislike
         await this.removeDislike();
       }
@@ -146,10 +171,10 @@ export default {
     async postDislike() {
       // update frontend
       this.$emit("dislike", { contentId: this.contentObj.id, action: "add" });
-      this.dislikeStyle = 'fa-solid'
+      this.dislikeStyle = "fa-solid";
       this.disliked = true;
 
-      if(this.liked){
+      if (this.liked) {
         // user liked this content previously -> the user change idea and now dislike this content, so remove the like
         await this.removeLike();
       }
@@ -174,7 +199,7 @@ export default {
     async removeLike() {
       // update frontend
       this.$emit("like", { contentId: this.contentObj.id, action: "remove" });
-      this.likeStyle = 'fa-regular'
+      this.likeStyle = "fa-regular";
       this.liked = false;
 
       // I'm going to update the backend now
@@ -203,9 +228,9 @@ export default {
         contentId: this.contentObj.id,
         action: "remove",
       });
-      this.dislikeStyle = 'fa-regular'
+      this.dislikeStyle = "fa-regular";
       this.disliked = false;
-  
+
       // I'm going to update the backend now
 
       // require jwt token
@@ -260,6 +285,6 @@ video {
 }
 
 .content{
-  margin-bottom: 6em;
+  margin-bottom: 5em;
 }
 </style>

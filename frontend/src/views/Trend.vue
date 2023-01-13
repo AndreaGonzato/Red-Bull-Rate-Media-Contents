@@ -2,11 +2,15 @@
   <div class="trend">
     <h1>Most Liked</h1>
 
-    <div v-for="content in trendContents" class="all-trend-contents">
+    <div v-for="(content, index) in trendContents" class="all-trend-contents">
+
       <div class="content">
+        
         <MediaContent
           v-bind:user-id="parseInt(this.userId)"
-          
+
+          v-bind:rank-likes="index+1"
+
           v-bind:content-obj="content"
           v-bind:likes-number="content.likes ? content.likes.length : 0"
           v-bind:dislikes-number="
