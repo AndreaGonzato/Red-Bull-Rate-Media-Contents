@@ -1,7 +1,7 @@
 <template>
   <div class="feed">
     <h1>Feed</h1>
-    <p>Welcome back {{ this.username }}</p>
+    <p>Welcome back {{ this.username }}!</p>
 
     <div v-for="content in limitedContents">
       <div class="content">
