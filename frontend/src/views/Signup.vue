@@ -75,8 +75,9 @@ export default {
       const obj = await postRequest.json();
       if (obj.insertedId !== undefined) {
         // OK
-        // go the the Feed page
-        this.$router.push({ name: "Feed" });
+
+        // go the the Login page
+        this.$router.push({ name: "Login" });
       } else {
         // user not inserted
         this.$router.push({

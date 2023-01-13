@@ -17,16 +17,28 @@ function getCookie(name) {
 }
 
 function setJwtCookie(token) {
-  // Set the expiration date to one hour from now
   var expires = new Date();
-  expires.setTime(expires.getTime() + 1 * 60 * 60 * 1000);
+    // Set the expiration date to two hour from now
+  expires.setTime(expires.getTime() + 2 * 60 * 60 * 1000);
 
   // TODO add the httponly mode
   // Set the JWT
   document.cookie = "jwt=" + token + ";expires=" + expires.toUTCString(); //";httponly";
 }
 
+function removeJwtCookie() {
+  var expires = new Date();
+  // Set the expiration date to 1 min from now
+  expires.setTime(expires.getTime() +   1 * 60 * 1000);
+
+  // Set a wrong JWT token
+  document.cookie = "jwt=" + "wrongTokenSaving" + ";expires=" + expires.toUTCString();
+}
+
+
+
 export default {
   getCookie: getCookie,
   setJwtCookie,
+  removeJwtCookie
 };

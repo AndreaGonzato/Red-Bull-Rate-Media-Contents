@@ -7,12 +7,14 @@
 </template>
 
 <script>
+import cookieManager from '@/cookieManager.js';
 
 export default{
     name: "Account",
     methods: {
         logout(){
             this.$emit('message', {showAccount: false});
+            cookieManager.removeJwtCookie();
             this.$router.push({ name: 'Home'} );
         }
     }
