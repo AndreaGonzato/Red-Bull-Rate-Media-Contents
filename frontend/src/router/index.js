@@ -28,6 +28,11 @@ const routes = [
     path: "/trend",
     name: "Trend",
     component: () => import("@/views/Trend.vue"),
+  },
+  {
+    path: "/error/:message",
+    name: "Error",
+    component: () => import("@/views/Error.vue"),
   }
 ];
 

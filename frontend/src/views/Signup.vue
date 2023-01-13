@@ -1,59 +1,52 @@
 <template>
   <div class="all">
-    <div v-if="this.error">
-      <ErrorPage v-bind:the-message="this.message"></ErrorPage>
-    </div>
+    <h1>Signup</h1>
 
-    <div v-if="!this.error" class="signup">
-      <h1>Signup</h1>
+    <p>Please fill this form to create an account!</p>
 
-      <p>Please fill this form to create an account!</p>
+    <form>
+      <div class="row">
+        <input
+          type="text"
+          v-model="username"
+          name="email"
+          class="form-control"
+          placeholder="Username"
+        />
+      </div>
 
-      <form>
-        <div class="row">
-          <input
-            type="text"
-            v-model="username"
-            name="email"
-            class="form-control"
-            placeholder="Username"
-          />
-        </div>
+      <div class="row">
+        <input
+          type="text"
+          v-model="email"
+          name="email"
+          class="form-control"
+          placeholder="Email"
+        />
+      </div>
 
-        <div class="row">
-          <input
-            type="text"
-            v-model="email"
-            name="email"
-            class="form-control"
-            placeholder="Email"
-          />
-        </div>
+      <div class="row">
+        <input
+          type="password"
+          v-model="password"
+          name="password"
+          class="form-control"
+          placeholder="Password"
+        />
+      </div>
 
-        <div class="row">
-          <input
-            type="password"
-            v-model="password"
-            name="password"
-            class="form-control"
-            placeholder="Password"
-          />
-        </div>
+      <button @click.prevent="signup" class="btn btn-primary">Sign up</button>
+    </form>
 
-        <button @click.prevent="signup" class="btn btn-primary">Sign up</button>
-      </form>
-
-      <p>
-        Already have an account?
-        <router-link to="/login">Login here</router-link>
-      </p>
-    </div>
+    <p>
+      Already have an account?
+      <router-link to="/login">Login here</router-link>
+    </p>
   </div>
 </template>
 
 <script>
 import config from "@/config.js";
-import ErrorPage from "@/components/ErrorPage.vue";
 
 export default {
   name: "Signup",
@@ -62,12 +55,10 @@ export default {
       email: "",
       password: "",
       username: "",
-      error: false,
-      message: ''
     };
   },
-  components: {
-    ErrorPage,
+  created() {
+    this.error = false;
   },
   methods: {
     async signup() {
@@ -88,8 +79,10 @@ export default {
         this.$router.push({ name: "Feed" });
       } else {
         // user not inserted
-        this.error = true;
-        this.message =  obj.message;
+        this.$router.push({
+          name: "Error",
+          params: { message: obj.message },
+        });
       }
     },
   },
