@@ -13,7 +13,7 @@
 
     <!--video-->
     <div v-if="this.showVideo">
-      <video controls>
+      <video controls autoplay>
         <source v-bind:src="contentObj.contentUrl" type="video/mp4" />
       </video>
     </div>
