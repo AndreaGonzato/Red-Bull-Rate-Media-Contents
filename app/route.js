@@ -87,6 +87,13 @@ router.post("/auth/signup", async (req, res) => {
     return res.status(500).send({message: "Username: "+userWithSameUsername.username +" already exist, choose another one!"});
   }
 
+  // check that the email is unique
+  const userWithSameEmail = await mongo.collection(dbCollections.USERS).findOne({email: user.email});
+  if(userWithSameEmail){
+    // it already exist an user with that email 
+    return res.status(500).send({message: "It already exist a register user with this email: "+userWithSameEmail.email});
+  }
+
   const result = await mongo.collection(dbCollections.USERS).insertOne(user);
   res.json(result);
 
