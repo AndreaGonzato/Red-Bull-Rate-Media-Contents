@@ -85,7 +85,7 @@ export default {
       }
     },
   },
-  mounted() {
+  created(){
     if (
       this.contentObj.likes !== undefined &&
       this.contentObj.likes.includes(this.userId)

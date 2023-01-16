@@ -16,7 +16,7 @@
           @dislike="handleDislike"
         ></MediaContent>
 
-        <hr/>
+        <hr />
       </div>
     </div>
 
@@ -53,7 +53,7 @@ export default {
       //return this.contents[0, this.limit];
     },
   },
-  async mounted() {
+  async created() {
     const user = await userManager.whoami();
     this.userId = user.id;
     this.username = user.username;
@@ -130,8 +130,7 @@ export default {
 </script>
 
 <style scoped>
-
-hr{
+hr {
   max-width: 600px;
   margin: auto;
 }
