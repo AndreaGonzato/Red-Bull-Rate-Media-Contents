@@ -25,7 +25,7 @@
       </span>
 
       <span v-if="showAccount">
-        <router-link to="/trend">Most liked</router-link>
+        <router-link to="/trend">Most Liked</router-link>
       </span>
 
 
