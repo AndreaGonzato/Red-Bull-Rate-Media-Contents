@@ -1,6 +1,6 @@
 <template>
     <div class="home">
-        <h1>Home</h1>
+        <h1>Red Bull Rate Media Content</h1>
         <p>Welcome to <b>Red Bull Rate Media Content</b>, here you can watch and rate your favorite Red Bull contents.</p>
     </div>
 </template>
